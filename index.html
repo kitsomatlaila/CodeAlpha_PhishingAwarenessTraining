@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phishing Awareness Training</title>
+<link rel="stylesheet" href="style.css">
+<!-- jsPDF for certificate -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- Confetti -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+    <h1>CyberSafe</h1>
+    <div class="container">
+        <h1>Phishing Awareness Training</h1>
+        <p>Learn to identify phishing attacks, avoid scams, and stay safe online.</p>
+        <a href="#phishing" class="btn">Start Training</a>
+        <div class="progress-container">
+            <div class="progress-percentage" id="progress-label">0%</div>
+            <div class="progress-bar"><div id="progress"></div></div>
+        </div>
+    </div>
+</header>
+
+<!-- Navigation -->
+<nav>
+    <ul class="nav-links">
+        <li><a href="#intro">Home</a></li>
+        <li><a href="#phishing">Phishing</a></li>
+        <li><a href="#simulate">Simulation</a></li>
+        <li><a href="#quiz">Quiz</a></li>
+        <li><a href="#certificate">Certificate</a></li>
+    </ul>
+</nav>
+
+<!-- Intro Section -->
+<section id="intro" class="section">
+    <div class="container">
+        <h2>Welcome!</h2>
+        <p>This interactive training module will help you recognize phishing attempts and practice safe online behavior.</p>
+    </div>
+</section>
+<section id="learn" class="info-section">
+  <h2>Learn About Phishing</h2>
+
+  <div class="info-block">
+    <h3>📧 What is Phishing?</h3>
+    <p>Phishing is a cyber-attack where attackers pretend to be a trusted entity in order to steal sensitive information like passwords, credit card numbers, or login credentials.</p>
+  </div>
+
+  <div class="info-block">
+    <h3>⚠️ Common Signs of Phishing Emails</h3>
+    <ul>
+      <li>Spelling and grammar mistakes</li>
+      <li>Suspicious links or attachments</li>
+      <li>Urgent requests (e.g. "Your account will be locked!")</li>
+      <li>Unfamiliar sender address</li>
+    </ul>
+  </div>
+
+  <div class="info-block">
+    <h3>🔎 Types of Phishing Attacks</h3>
+    <p>Attackers may use email (phishing), text messages (smishing), voice calls (vishing), or social media scams to trick victims.</p>
+  </div>
+
+  <div class="info-block">
+    <h3>🛡️ How to Protect Yourself</h3>
+    <ul>
+      <li>Do not click on unknown links</li>
+      <li>Verify the sender’s email address</li>
+      <li>Use multi-factor authentication</li>
+      <li>Report suspicious emails to your IT/security team</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Phishing Section -->
+<section id="phishing" class="section">
+    <div class="container">
+        <div><h2>Examples</h2>
+       
+        <div class="examples">
+            <div class="example">
+                <img src="images/email.png" alt="Email Example">
+                <p><strong>Email Example:</strong> "Your bank account is at risk! Click here to secure it."</p>
+            </div>
+            <div class="example">
+                <img src="images/login.png" alt="Website Example">
+                <p><strong>Website Example:</strong> Fake login page mimicking your email provider.</p>
+            </div>
+            <div class="example">
+                <img src="images/se.png" alt="Social Engineering">
+                <p><strong>Social Engineering:</strong> Attackers use urgency, fear, or authority to trick you.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="user-section">
+  <label for="username">Enter your name:</label>
+  <input type="text" id="username" placeholder="Your Full Name">
+  <button onclick="startTraining()">🚀 Start Training</button>
+</div>
+
+
+<!-- Simulation Section -->
+<section id="simulation" class="simulation-section">
+  <h2>Interactive Phishing Simulations</h2>
+  <p>Test your skills by spotting phishing attempts in real-life scenarios.</p>
+
+  <!-- Simulation 1: Email -->
+ <section id="email-sim">
+  <h2>📧 Email Simulation</h2>
+  <p>Click on the <strong>suspicious parts</strong> of this email:</p>
+
+  <div class="email-box">
+    <p><span class="clickable" data-feedback="The email address is suspicious. Notice the 'I' instead of 'l' in PaypaI.">From: support@paypaI.com</span></p>
+    <p><span class="clickable" data-feedback="Attackers use urgent subjects to trick you into acting quickly.">Subject: Urgent: Verify your account now!</span></p>
+    <p>Dear Customer,</p>
+    <p>Your account will be suspended in 24 hours unless you verify it.</p>
+    <p><span class="clickable" data-feedback="This is a phishing link! Never click suspicious login links.">Click here to login</span></p>
+  </div>
+
+  <div id="feedback"></div>
+</section>
+
+
+  <!-- Simulation 2: SMS -->
+  <div class="simulation" id="sms-sim">
+    <h3>📱 SMS Simulation</h3>
+    <p>Is this SMS safe or a phishing attempt?</p>
+    <blockquote>"Your bank account has been locked. Click http://bank-secure-login.com to unlock."</blockquote>
+    <button onclick="checkSMS(true)">Phishing</button>
+    <button onclick="checkSMS(false)">Safe</button>
+    <p id="sms-result"></p>
+  </div>
+
+  <!-- Simulation 3: Website -->
+  <div class="simulation" id="website-sim">
+    <h3>🌐 Website Simulation</h3>
+    <p>Would you trust this login page?</p>
+    <img src="images/login.png" alt="Fake login screenshot" class="fake-site">
+    <br>
+    <button onclick="checkWebsite(true)">Looks Phishy</button>
+    <button onclick="checkWebsite(false)">Looks Safe</button>
+    <p id="website-result"></p>
+  </div>
+
+  <!-- Simulation 4: Social Media -->
+  <div class="simulation" id="social-sim">
+    <h3>💬 Social Media Simulation</h3>
+    <p>You receive this message: <br>
+    <i>"Hey! You just won a free iPhone 😍 Click this link to claim: freeiphone.scam"</i></p>
+    <button onclick="checkSocial(true)">Phishing</button>
+    <button onclick="checkSocial(false)">Safe</button>
+    <p id="social-result"></p>
+  </div>
+</section>
+
+
+<!-- Quiz Section -->
+ <section id="quiz">
+    <h2>📝 Quiz</h2>
+    <p>Test your knowledge with 8 questions.</p>
+
+    <div class="quiz-question">
+      <p>1. What is the most common goal of phishing attacks?</p>
+      <button onclick="quizAnswer(this, true, 'Correct! They want your personal info.')">Stealing sensitive info</button>
+      <button onclick="quizAnswer(this, false, 'Incorrect, attackers usually want data, not just ads.')">Showing ads</button>
+    </div>
+
+    <div class="quiz-question">
+      <p>2. True or False: All phishing emails contain spelling mistakes.</p>
+      <button onclick="quizAnswer(this, false, 'Correct! Many are very professional.')">False</button>
+      <button onclick="quizAnswer(this, true, 'Incorrect, some look perfect.')">True</button>
+    </div>
+
+    <div class="quiz-question">
+      <p>3. Which is safer?</p>
+      <button onclick="quizAnswer(this, true, 'Correct! Always type it yourself.')">Typing bank URL manually</button>
+      <button onclick="quizAnswer(this, false, 'Incorrect! Email links may be fake.')">Clicking email link</button>
+    </div>
+
+    <div class="quiz-question">
+      <p>4. True or False: Hovering over a link shows where it really leads.</p>
+      <button onclick="quizAnswer(this, true, 'Correct! Hover before clicking.')">True</button>
+      <button onclick="quizAnswer(this, false, 'Incorrect! Hovering is key.')">False</button>
+    </div>
+
+    <div class="quiz-question">
+      <p>5. Which of these is a red flag?</p>
+      <button onclick="quizAnswer(this, false, 'Not always bad.')">Greeting with your name</button>
+      <button onclick="quizAnswer(this, true, 'Correct! Urgency is a phishing tactic.')">Threats and urgency</button>
+    </div>
+
+    <div class="quiz-question">
+      <p>6. True or False: Companies often ask for passwords via email.</p>
+      <button onclick="quizAnswer(this, false, 'Correct! Real companies never ask passwords via email.')">False</button>
+      <button onclick="quizAnswer(this, true, 'Incorrect! They never should.')">True</button>
+    </div>
+
+    <div class="quiz-question">
+      <p>7. Which is safest?</p>
+      <button onclick="quizAnswer(this, false, 'Not always safe, could be fake.')">Opening email attachment</button>
+      <button onclick="quizAnswer(this, true, 'Correct! Attachments are risky if unexpected.')">Deleting suspicious attachment</button>
+    </div>
+
+    <div class="quiz-question">
+      <p>8. True or False: Phishing only happens via email.</p>
+      <button onclick="quizAnswer(this, false, 'Correct! Phishing also happens by phone, SMS, social media.')">False</button>
+      <button onclick="quizAnswer(this, true, 'Incorrect! It can happen many ways.')">True</button>
+    </div>
+
+
+
+<!-- Certificate -->
+  <section id="certificate">
+    <h2>🏆 Certificate</h2>
+    <button onclick="generateCertificate()">Download Certificate</button>
+  </section>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+  <script src="certificate.js"></script>
+</body>
+</html>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <p>&copy; 2025 Phishing Awareness Training | Stay Safe Online</p>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+<script src="certificate.js"></script>
+</body>
+</html>
